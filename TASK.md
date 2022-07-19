@@ -2,13 +2,16 @@
 The test task consists of two parts, the main part, and a bonus part.
 We suggest tackling the bonus part once the main objective of the service has been achieved.
 
-The task is to build a JSON over HTTP API endpoint that takes as input two IATA/ICAO airport codes and provides as output a route between these two airports so that:
+## Main Task
+Build a JSON over HTTP API endpoint that takes as input two IATA/ICAO airport codes and provides as output a route between these two airports so that:
 
 The route consists of at most 4 legs/flights (that is, 3 stops/layovers, if going from A->B, a valid route could be A->1->2->3->B, or for example A->1->B etc.) and;
 
 The route is the shortest such route as measured in kilometers of geographical distance.
 
-For the bonus part, extend your service so that it also allows changing airports during stops that are within 100km of each other. 
+## Bonus Task
+
+Extend your service so that it also allows changing airports during stops that are within 100km of each other.
 
 For example, if going from A->B, a valid route could be A->1->2=>3->4->B, where “2=>3” is a change of airports done via ground.
 
