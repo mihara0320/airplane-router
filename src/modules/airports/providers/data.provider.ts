@@ -1,12 +1,16 @@
 import { ConfigService } from '@nestjs/config';
 import { IAirport } from '../interfaces/airports.interface';
-import { getParsedData } from '../../../utils';
+
+import { CsvService } from '../../../common/services/csv/csv.service';
 
 export const dataProvider = {
   provide: 'AIRPORTS_DATA',
-  useFactory: async (configService: ConfigService): Promise<IAirport[]> => {
+  useFactory: async (
+    configService: ConfigService,
+    csvService: CsvService,
+  ): Promise<IAirport[]> => {
     const dataSource = configService.get<string>('dataSource.airports');
-    const rawData = await getParsedData(dataSource);
+    const rawData = await csvService.parseData(dataSource);
     return rawData.map((raw) => {
       return {
         airportID: raw[0],
@@ -20,5 +24,5 @@ export const dataProvider = {
       } as IAirport;
     });
   },
-  inject: [ConfigService],
+  inject: [ConfigService, CsvService],
 };

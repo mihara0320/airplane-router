@@ -1,13 +1,16 @@
 import { ConfigService } from '@nestjs/config';
 
 import { IRoute } from '../interfaces/routes.interface';
-import { getParsedData } from '../../../utils';
+import { CsvService } from '@common/services/csv/csv.service';
 
 export const dataProvider = {
   provide: 'ROUTES_DATA',
-  useFactory: async (configService: ConfigService): Promise<IRoute[]> => {
+  useFactory: async (
+    configService: ConfigService,
+    csvService: CsvService,
+  ): Promise<IRoute[]> => {
     const dataSource = configService.get<string>('dataSource.routes');
-    const rawData = await getParsedData(dataSource);
+    const rawData = await csvService.parseData(dataSource);
     return rawData.map((raw) => {
       return {
         airline: raw[0],
@@ -20,5 +23,5 @@ export const dataProvider = {
       } as IRoute;
     });
   },
-  inject: [ConfigService],
+  inject: [ConfigService, CsvService],
 };
