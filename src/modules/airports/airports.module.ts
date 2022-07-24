@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { dataProvider } from './providers/data.provider';
-import { AirportsService } from './providers/airports.service';
+import { AirportsService } from './services/airports.service';
 
 @Module({
   providers: [AirportsService, dataProvider],

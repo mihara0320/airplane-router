@@ -1,17 +1,19 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { AirportsService } from '@modules/airports/providers/airports.service';
-import { RoutesService } from '@modules/routes/providers/routes.service';
+import { Controller, Get, Query, Res } from '@nestjs/common';
+import { Response } from 'express';
+import { GraphService } from '@modules/graph/services/graph/graph.service';
+import { AirportsService } from '@modules/airports/services/airports.service';
 
 @Controller('navigation')
 export class NavigationController {
   constructor(
-    private airportsService: AirportsService,
-    private routesService: RoutesService,
+    private graphService: GraphService,
+    private airportService: AirportsService,
   ) {}
 
   @Get()
-  find(@Query() query: { src: string; dest: string }) {
-    console.log(query);
-    return this.routesService.findAll();
+  find(@Query() query: { src: string; dest: string }, @Res() res: Response) {
+    const a = this.airportService.findOne('10');
+    const graph = this.graphService.createGraph(a);
+    return res.json(graph);
   }
 }

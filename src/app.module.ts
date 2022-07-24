@@ -11,8 +11,9 @@ import { RoutesModule } from '@modules/routes/routes.module';
 
 import configuration from '@config/configuration';
 import { CommonModule } from '@common/common.module';
-import { AirportsController } from './controllers/airports/airports.controller';
-import { RoutesController } from './controllers/routes/routes.controller';
+import { AirportsController } from '@controllers/airports/airports.controller';
+import { RoutesController } from '@controllers/routes/routes.controller';
+import { GraphModule } from '@modules/graph/graph.module';
 
 @Module({
   imports: [
@@ -20,8 +21,14 @@ import { RoutesController } from './controllers/routes/routes.controller';
     CommonModule,
     AirportsModule,
     RoutesModule,
+    GraphModule,
   ],
-  controllers: [AppController, NavigationController, AirportsController, RoutesController],
+  controllers: [
+    AppController,
+    NavigationController,
+    AirportsController,
+    RoutesController,
+  ],
   providers: [AppService],
 })
 export class AppModule {}

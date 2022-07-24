@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { IAirport } from '../interfaces/airports.interface';
 
-import { CsvService } from '../../../common/services/csv/csv.service';
+import { CsvService } from '@common/services/csv/csv.service';
 
 export const dataProvider = {
   provide: 'AIRPORTS_DATA',

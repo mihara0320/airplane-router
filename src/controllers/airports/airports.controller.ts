@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { AirportsService } from '@modules/airports/providers/airports.service';
+import { AirportsService } from '@modules/airports/services/airports.service';
 
 @Controller('airports')
 export class AirportsController {
