@@ -3,11 +3,10 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { NavigationController } from './navigation/navigation.controller';
+import { NavigationController } from './controllers/navigation/navigation.controller';
 
-import { RoutesService } from './providers/routes/routes.service';
-
-import { AirportsModule } from './airports/airports.module';
+import { AirportsModule } from './modules/airports/airports.module';
+import { RoutesModule } from './modules/routes/routes.module';
 
 import configuration from './config/configuration';
 
@@ -15,8 +14,9 @@ import configuration from './config/configuration';
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
     AirportsModule,
+    RoutesModule,
   ],
   controllers: [AppController, NavigationController],
-  providers: [AppService, RoutesService],
+  providers: [AppService],
 })
 export class AppModule {}

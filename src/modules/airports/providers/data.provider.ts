@@ -1,14 +1,12 @@
 import { ConfigService } from '@nestjs/config';
-import { promises as fs } from 'fs';
-import { parse } from 'csv-parse/sync';
 import { IAirport } from '../interfaces/airports.interface';
+import { getParsedData } from '../../../utils';
 
 export const dataProvider = {
   provide: 'AIRPORTS_DATA',
   useFactory: async (configService: ConfigService): Promise<IAirport[]> => {
     const dataSource = configService.get<string>('dataSource.airports');
-    const fileContent = await fs.readFile(dataSource);
-    const rawData: string[][] = parse(fileContent);
+    const rawData = await getParsedData(dataSource);
     return rawData.map((raw) => {
       return {
         airportID: raw[0],
