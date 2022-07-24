@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { AirportsService } from '../../modules/airports/providers/airports.service';
-import { RoutesService } from '../../modules/routes/providers/routes.service';
+import { AirportsService } from '@modules/airports/providers/airports.service';
+import { RoutesService } from '@modules/routes/providers/routes.service';
 
 @Controller('navigation')
 export class NavigationController {
@@ -10,8 +10,8 @@ export class NavigationController {
   ) {}
 
   @Get()
-  find(@Query() query: { src: string; dest: string }): string {
+  find(@Query() query: { src: string; dest: string }) {
     console.log(query);
-    return JSON.stringify(this.routesService.find());
+    return this.routesService.findAll();
   }
 }

@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IAirport } from '../interfaces/airports.interface';
+import * as _ from 'lodash';
 
 @Injectable()
 export class AirportsService {
@@ -9,7 +10,11 @@ export class AirportsService {
     this.airports = airportData;
   }
 
-  find() {
-    return this.airports[0];
+  findAll() {
+    return this.airports;
+  }
+
+  findOne(airportID: string) {
+    return _.find(this.airports, (data) => data.airportID === airportID);
   }
 }
