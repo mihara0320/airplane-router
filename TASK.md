@@ -28,3 +28,11 @@ These switches are not considered as part of the legs/layover/hop count, but the
 * You are free to choose any programming language (TypeScript/Node is preferred, but not mandatory)
 
 * You can ask additional questions.
+
+
+# TODO
+* add test & mock data
+* add documentation
+* clean config
+* add swagger?
+* add validations & errors
