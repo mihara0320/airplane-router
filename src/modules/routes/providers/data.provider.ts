@@ -13,8 +13,6 @@ export const dataProvider = {
     const rawData = await csvService.parseData(dataSource);
     return rawData.map((raw) => {
       return {
-        airline: raw[0],
-        airlineID: raw[1],
         sourceAirport: raw[2],
         sourceAirportID: raw[3],
         destinationAirport: raw[4],
