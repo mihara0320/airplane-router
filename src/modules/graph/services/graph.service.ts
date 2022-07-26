@@ -33,10 +33,10 @@ export class GraphService {
     });
 
     airports.forEach((airport) => {
-      const routes = this.routesService.findAllForAirport(airport.airportID);
+      const routes = this.routesService.findAllForAirport(airport.iata);
       routes.forEach((route) => {
         const nextAirport = this.airportService.findOne(
-          route.destinationAirportID,
+          route.destinationAirport,
         );
         const distance = this.geolibService.getDistanceInKm(
           airport,
@@ -85,10 +85,10 @@ export class GraphService {
   createVertex(airport: IAirport, depth = 0): IVertex {
     const vertex = new Vertex(airport, depth);
     if (depth <= this.maxLayover) {
-      const routes = this.routesService.findAllForAirport(airport.airportID);
+      const routes = this.routesService.findAllForAirport(airport.iata);
       routes.forEach((route) => {
         const destAirport = this.airportService.findOne(
-          route.destinationAirportID,
+          route.destinationAirport,
         );
         if (!destAirport) {
           return null;

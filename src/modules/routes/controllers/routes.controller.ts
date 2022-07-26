@@ -10,9 +10,9 @@ export class RoutesController {
     return this.routesService.findAll();
   }
 
-  @Get(':airportID')
+  @Get(':iata')
   findOne(@Param() params) {
-    const airportID = params.airportID;
-    return this.routesService.findAllForAirport(airportID);
+    const iata = params.iata;
+    return this.routesService.findAllForAirport(iata);
   }
 }

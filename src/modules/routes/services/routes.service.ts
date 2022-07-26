@@ -14,7 +14,7 @@ export class RoutesService {
     return this.routes;
   }
 
-  findAllForAirport(airportID: string) {
-    return _.filter(this.routes, (data) => data.sourceAirportID === airportID);
+  findAllForAirport(iata: string) {
+    return _.filter(this.routes, (data) => data.sourceAirport === iata);
   }
 }

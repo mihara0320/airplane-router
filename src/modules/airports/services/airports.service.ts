@@ -3,6 +3,7 @@ import { IAirport } from '../interfaces/airports.interface';
 import * as _ from 'lodash';
 import { ConfigService } from '@nestjs/config';
 import { RoutesService } from '@modules/routes/services/routes.service';
+import { InvalidIataError } from '@modules/airports/errors';
 
 @Injectable()
 export class AirportsService {
@@ -22,16 +23,16 @@ export class AirportsService {
     return this.airports;
   }
 
-  findOne(airportID: string) {
-    return _.find(this.airports, (data) => data.airportID === airportID);
-  }
-
-  findOneByIata(iata: string) {
-    return _.find(this.airports, (data) => data.iata === iata);
+  findOne(iata: string) {
+    const airport = _.find(this.airports, (data) => data.iata === iata);
+    if (!airport) {
+      throw new InvalidIataError(iata);
+    }
+    return airport;
   }
 
   findAllAirportsInRange(fromIata: string) {
-    const airport = this.findOneByIata(fromIata);
+    const airport = this.findOne(fromIata);
     return this.getAllAirportsInRange(airport, new Set<string>(), 0);
   }
 
@@ -45,9 +46,9 @@ export class AirportsService {
     }
 
     if (depth <= this.maxLayover) {
-      const routes = this.routesService.findAllForAirport(airport.airportID);
+      const routes = this.routesService.findAllForAirport(airport.iata);
       routes.forEach((route) => {
-        const destAirport = this.findOne(route.destinationAirportID);
+        const destAirport = this.findOne(route.destinationAirport);
         return this.getAllAirportsInRange(destAirport, airports, depth + 1);
       });
     }

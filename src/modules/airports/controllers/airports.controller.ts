@@ -8,15 +8,16 @@ export class AirportsController {
   @Get()
   findAll(@Query() query: { from: string }) {
     const { from } = query;
+
     if (from) {
       return this.airportsService.findAllAirportsInRange(from);
     }
     return this.airportsService.findAll();
   }
 
-  @Get(':airportID')
+  @Get(':iata')
   findOne(@Param() params) {
-    const airportID = params.airportID;
-    return this.airportsService.findOne(airportID);
+    const iata = params.iata;
+    return this.airportsService.findOne(iata);
   }
 }
