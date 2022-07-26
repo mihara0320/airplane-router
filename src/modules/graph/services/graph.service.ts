@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { IVertex } from '@modules/graph/interfaces/graph.interface';
 import { ADJList } from '@modules/graph/models/AdjList.model';
 import { GeolibService } from '@common/services/geolib/geolib.service';
+import { Graph } from '@modules/graph/models/graph.model';
 
 @Injectable()
 export class GraphService {
@@ -22,19 +23,16 @@ export class GraphService {
     this.maxLayover = configService.get<number>('maxLayover');
     this.map = {};
   }
+
   getADJ() {
     const adjList = new ADJList();
-    const airports = this.airportService.findAll();
+    const airports = this.airportService.findAll().filter((o) => !o);
+
     airports.forEach((airport) => {
-      if (!airport.airportID) {
-        return;
-      }
       adjList.addNode(airport.iata);
     });
+
     airports.forEach((airport) => {
-      if (!airport.airportID) {
-        return;
-      }
       const routes = this.routesService.findAllForAirport(airport.airportID);
       routes.forEach((route) => {
         const nextAirport = this.airportService.findOne(
@@ -49,27 +47,57 @@ export class GraphService {
     });
     return adjList;
   }
-  //
-  // createGraph(airport: IAirport): IVertex {
-  //   return this.createVertex(airport);
-  // }
-  //
-  // createVertex(airport: IAirport, depth = 0): IVertex {
-  //   const vertex = new Vertex(airport, depth);
-  //   if (depth <= this.maxLayover) {
-  //     const routes = this.routesService.findAllForAirport(airport.airportID);
-  //     routes.forEach((route) => {
-  //       const destAirport = this.airportService.findOne(
-  //         route.destinationAirportID,
-  //       );
-  //       if (!destAirport) {
-  //         return null;
-  //       }
-  //       const destVertex = this.createVertex(destAirport, depth + 1);
-  //       vertex.addEdge(destVertex);
-  //     });
-  //   }
-  //
-  //   return vertex;
-  // }
+
+  getGraph() {
+    const graph = new Graph<string>();
+
+    const airport = this.airportService.findOne('10');
+    return 'test';
+
+    // const airportsInRange = this.getAllAirportsInRange(
+    //   airport,
+    //   new Set<string>(),
+    //   0,
+    // );
+
+    // airports.forEach((airport) => {
+    //   const routes = this.routesService.findAllForAirport(airport.airportID);
+    //   routes.forEach((route) => {
+    //     const nextAirport = this.airportService.findOne(
+    //       route.destinationAirportID,
+    //     );
+    //     if (airport && nextAirport) {
+    //       // const distance = this.geolibService.getDistanceInKm(
+    //       //   airport,
+    //       //   nextAirport,
+    //       // );
+    //       graph.addEdge(airport.iata, nextAirport.iata);
+    //     }
+    //   });
+    // });
+    // return graph;
+  }
+
+  createGraph(airport: IAirport): IVertex {
+    return this.createVertex(airport);
+  }
+
+  createVertex(airport: IAirport, depth = 0): IVertex {
+    const vertex = new Vertex(airport, depth);
+    if (depth <= this.maxLayover) {
+      const routes = this.routesService.findAllForAirport(airport.airportID);
+      routes.forEach((route) => {
+        const destAirport = this.airportService.findOne(
+          route.destinationAirportID,
+        );
+        if (!destAirport) {
+          return null;
+        }
+        const destVertex = this.createVertex(destAirport, depth + 1);
+        vertex.addEdge(destVertex);
+      });
+    }
+
+    return vertex;
+  }
 }

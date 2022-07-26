@@ -11,7 +11,7 @@ export class ADJList {
 
   addNode(node: string) {
     if (this.distinctNode.has(node)) {
-      console.log('already exist', node);
+      // console.log('already exist', node);
     } else {
       this.distinctNode.add(node);
     }

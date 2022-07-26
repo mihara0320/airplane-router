@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { AirportsService } from '@modules/airports/services/airports.service';
 
 @Controller('airports')
@@ -6,7 +6,11 @@ export class AirportsController {
   constructor(private airportsService: AirportsService) {}
 
   @Get()
-  findAll() {
+  findAll(@Query() query: { from: string }) {
+    const { from } = query;
+    if (from) {
+      return this.airportsService.findAllAirportsInRange(from);
+    }
     return this.airportsService.findAll();
   }
 
