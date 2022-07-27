@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { IAirport } from '@modules/airports/interfaces/airports.interface';
 import { AirportsService } from '@modules/airports/services/airports.service';
 import { RoutesService } from '@modules/routes/services/routes.service';
-import { Vertex } from '@modules/graph/models/vertex.model';
 import { ConfigService } from '@nestjs/config';
-import { IVertex } from '@modules/graph/interfaces/graph.interface';
-import { ADJList } from '@modules/graph/models/AdjList.model';
 import { GeolibService } from '@common/services/geolib/geolib.service';
 import { Graph } from '@modules/graph/models/graph.model';
 
@@ -25,7 +21,7 @@ export class GraphService {
   }
 
   getGraph() {
-    const graph = new Graph<string>();
+    const graph = new Graph();
 
     const airport = this.airportService.findOne('10');
     return 'test';
@@ -52,28 +48,5 @@ export class GraphService {
     //   });
     // });
     // return graph;
-  }
-
-  createGraph(airport: IAirport): IVertex {
-    return this.createVertex(airport);
-  }
-
-  createVertex(airport: IAirport, depth = 0): IVertex {
-    const vertex = new Vertex(airport, depth);
-    if (depth <= this.maxLayover) {
-      const routes = this.routesService.findAllForAirport(airport.iata);
-      routes.forEach((route) => {
-        const destAirport = this.airportService.findOne(
-          route.destinationAirport,
-        );
-        if (!destAirport) {
-          return null;
-        }
-        const destVertex = this.createVertex(destAirport, depth + 1);
-        vertex.addEdge(destVertex);
-      });
-    }
-
-    return vertex;
   }
 }

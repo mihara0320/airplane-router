@@ -3,3 +3,5 @@ export interface IAirport {
   latitude: number;
   longitude: number;
 }
+
+export type IAirportMap = Map<string, IAirport>;

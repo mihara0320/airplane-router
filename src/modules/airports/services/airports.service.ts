@@ -1,63 +1,55 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { IAirport } from '../interfaces/airports.interface';
-import * as _ from 'lodash';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { RoutesService } from '@modules/routes/services/routes.service';
-import { InvalidIataError } from '@modules/airports/errors';
+
+import { DataService } from '@database/services/data-service.service';
+import { IAirport } from '@database/interfaces/airport.interface';
 
 @Injectable()
 export class AirportsService {
-  private readonly _airports: Map<string, IAirport>;
   private readonly _maxLayover;
 
   constructor(
-    @Inject('AIRPORTS_DATA') airports: Map<string, IAirport>,
     private configService: ConfigService,
-    private routesService: RoutesService,
+    private dataService: DataService,
   ) {
     this._maxLayover = configService.get<number>('maxLayover');
-    this._airports = airports;
   }
 
   findAll(): IAirport[] {
-    return Array.from(this._airports.values());
+    return this.dataService.airports.getAll();
   }
 
   findOne(iata: string): IAirport {
-    const airport = this._airports.get(iata);
-    if (!airport) {
-      throw new InvalidIataError(iata);
-    }
-    return airport;
+    return this.dataService.airports.get(iata);
   }
 
-  findAllAirportsInRange(fromIata: string) {
-    const airport = this.findOne(fromIata);
-    return this.getAllAirportsInRange(airport, new Set<string>(), 0);
-  }
+  // findAllAirportsInRange(fromIata: string) {
+  //   const airport = this.findOne(fromIata);
+  //   return this.getAllAirportsInRange(airport, new Set<string>(), 0);
+  // }
 
-  getAllAirportsInRange(airport: IAirport, airports: Set<string>, depth = 0) {
-    if (!airport) {
-      return;
-    }
-
-    if (!airports.has(airport.iata)) {
-      airports.add(airport.iata);
-    }
-
-    if (depth <= this._maxLayover) {
-      const routes = this.routesService.findAllForAirport(airport.iata);
-      routes.forEach((route) => {
-        let destination;
-        try {
-          destination = this.findOne(route.destinationAirport);
-          return this.getAllAirportsInRange(destination, airports, depth + 1);
-        } catch (e) {
-          console.log(`Airport not found: ${route.destinationAirport}`);
-        }
-      });
-    }
-
-    return airports;
-  }
+  // getAllAirportsInRange(airport: IAirport, airports: Set<string>, depth = 0) {
+  //   if (!airport) {
+  //     return;
+  //   }
+  //
+  //   if (!airports.has(airport.iata)) {
+  //     airports.add(airport.iata);
+  //   }
+  //
+  //   if (depth <= this._maxLayover) {
+  //     const routes = this.routesService.findAllForAirport(airport.iata);
+  //     routes.forEach((route) => {
+  //       let destination;
+  //       try {
+  //         destination = this.findOne(route.destinationAirport);
+  //         return this.getAllAirportsInRange(destination, airports, depth + 1);
+  //       } catch (e) {
+  //         console.log(`Airport not found: ${route.destinationAirport}`);
+  //       }
+  //     });
+  //   }
+  //
+  //   return airports;
+  // }
 }

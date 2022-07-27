@@ -1,20 +1,19 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { IRoute } from '../interfaces/routes.interface';
 import * as _ from 'lodash';
+
+import { Injectable } from '@nestjs/common';
+import { DataService } from '@database/services/data-service.service';
+import { IRoute } from '@database/interfaces/route.interface';
 
 @Injectable()
 export class RoutesService {
-  private readonly _routes: IRoute[];
+  constructor(private dataService: DataService) {}
 
-  constructor(@Inject('ROUTES_DATA') routes: IRoute[]) {
-    this._routes = routes;
-  }
-
-  findAll() {
-    return this._routes;
+  findAll(): IRoute[] {
+    return this.dataService.routes.getAll();
   }
 
   findAllForAirport(iata: string) {
-    return _.filter(this._routes, (data) => data.sourceAirport === iata);
+    const routes = this.dataService.routes.getAll();
+    return _.filter(routes, (data) => data.sourceAirport === iata);
   }
 }

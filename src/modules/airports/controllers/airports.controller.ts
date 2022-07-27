@@ -7,11 +7,10 @@ export class AirportsController {
 
   @Get()
   findAll(@Query() query: { from: string }) {
-    const { from } = query;
-
-    if (from) {
-      return this.airportsService.findAllAirportsInRange(from);
-    }
+    // const { from } = query;
+    // if (from) {
+    //   return this.airportsService.findAllAirportsInRange(from);
+    // }
     return this.airportsService.findAll();
   }
 

@@ -10,6 +10,7 @@ import { RoutesModule } from '@modules/routes/routes.module';
 import configuration from '@config/configuration';
 import { CommonModule } from '@common/common.module';
 import { GraphModule } from '@modules/graph/graph.module';
+import { DatabaseModule } from '@database/database.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { GraphModule } from '@modules/graph/graph.module';
     AirportsModule,
     RoutesModule,
     GraphModule,
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,9 +1,6 @@
-import { IAirport } from '@modules/airports/interfaces/airports.interface';
-
 export interface IVertex {
-  airport: IAirport;
+  iata: string;
   edges: IEdge[];
-  depth: number;
 }
 
 export interface IEdge {
