@@ -21,4 +21,12 @@ export class AirportRepository extends GenericRepository<Airport, IAirportMap> {
   getAll(): IAirport[] {
     return Array.from(this._data.values());
   }
+
+  getMap(): IAirportMap {
+    return this._data;
+  }
+
+  getIatas(): string[] {
+    return Array.from(this._data.keys());
+  }
 }

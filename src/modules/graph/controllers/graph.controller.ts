@@ -9,6 +9,6 @@ export class GraphController {
   @Get()
   find(@Param() params, @Res() res: Response) {
     const graph = this.graphService.getGraph();
-    return res.json(Array.from(graph));
+    return res.json(Array.from(graph._map.keys()));
   }
 }
