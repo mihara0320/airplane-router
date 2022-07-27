@@ -7,24 +7,24 @@ import { InvalidIataError } from '@modules/airports/errors';
 
 @Injectable()
 export class AirportsService {
-  private readonly airports: IAirport[];
-  private readonly maxLayover;
+  private readonly _airports: Map<string, IAirport>;
+  private readonly _maxLayover;
 
   constructor(
-    @Inject('AIRPORTS_DATA') airportData: IAirport[],
+    @Inject('AIRPORTS_DATA') airports: Map<string, IAirport>,
     private configService: ConfigService,
     private routesService: RoutesService,
   ) {
-    this.maxLayover = configService.get<number>('maxLayover');
-    this.airports = airportData;
+    this._maxLayover = configService.get<number>('maxLayover');
+    this._airports = airports;
   }
 
-  findAll() {
-    return this.airports;
+  findAll(): IAirport[] {
+    return Array.from(this._airports.values());
   }
 
-  findOne(iata: string) {
-    const airport = _.find(this.airports, (data) => data.iata === iata);
+  findOne(iata: string): IAirport {
+    const airport = this._airports.get(iata);
     if (!airport) {
       throw new InvalidIataError(iata);
     }
@@ -45,11 +45,16 @@ export class AirportsService {
       airports.add(airport.iata);
     }
 
-    if (depth <= this.maxLayover) {
+    if (depth <= this._maxLayover) {
       const routes = this.routesService.findAllForAirport(airport.iata);
       routes.forEach((route) => {
-        const destAirport = this.findOne(route.destinationAirport);
-        return this.getAllAirportsInRange(destAirport, airports, depth + 1);
+        let destination;
+        try {
+          destination = this.findOne(route.destinationAirport);
+          return this.getAllAirportsInRange(destination, airports, depth + 1);
+        } catch (e) {
+          console.log(`Airport not found: ${route.destinationAirport}`);
+        }
       });
     }
 

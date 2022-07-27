@@ -24,30 +24,6 @@ export class GraphService {
     this.map = {};
   }
 
-  getADJ() {
-    const adjList = new ADJList();
-    const airports = this.airportService.findAll().filter((o) => !o);
-
-    airports.forEach((airport) => {
-      adjList.addNode(airport.iata);
-    });
-
-    airports.forEach((airport) => {
-      const routes = this.routesService.findAllForAirport(airport.iata);
-      routes.forEach((route) => {
-        const nextAirport = this.airportService.findOne(
-          route.destinationAirport,
-        );
-        const distance = this.geolibService.getDistanceInKm(
-          airport,
-          nextAirport,
-        );
-        adjList.addEdge(airport.iata, nextAirport.iata, distance);
-      });
-    });
-    return adjList;
-  }
-
   getGraph() {
     const graph = new Graph<string>();
 
