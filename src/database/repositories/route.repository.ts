@@ -1,8 +1,9 @@
 import * as _ from 'lodash';
 import { IRoute } from '../interfaces/route.interface';
 import { GenericRepository } from './generic.repository';
+import { Route } from '@database/entities/route.entity';
 
-export class RouteRepository extends GenericRepository<IRoute, IRoute[]> {
+export class RouteRepository extends GenericRepository<Route, Route[]> {
   _data: IRoute[];
 
   constructor(data: IRoute[]) {

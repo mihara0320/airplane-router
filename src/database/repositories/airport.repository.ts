@@ -1,11 +1,9 @@
 import { IAirport, IAirportMap } from '../interfaces/airport.interface';
 import { GenericRepository } from './generic.repository';
 import { InvalidIataError } from '@database/errors';
+import { Airport } from '@database/entities/airport.entity';
 
-export class AirportRepository extends GenericRepository<
-  IAirport,
-  IAirportMap
-> {
+export class AirportRepository extends GenericRepository<Airport, IAirportMap> {
   _data: IAirportMap;
 
   constructor(data: IAirportMap) {
