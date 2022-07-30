@@ -1,9 +1,14 @@
 import { Edge } from '@modules/graph/models/edge.model';
 import * as _ from 'lodash';
 
+interface IBestPath {
+  distance: number;
+  hops: string[];
+}
+
 export class Graph {
   _adjMap: Map<string, Edge[]> = new Map();
-  _minDistances: Map<string, number> = new Map();
+  _minDistances: Map<string, IBestPath> = new Map();
 
   addEdge(iata: string, edge: Edge): void {
     if (this._adjMap.has(iata)) {
@@ -18,15 +23,15 @@ export class Graph {
   findShortestPaths(srcIata: string) {
     const visited = new Set<string>();
     this.initMinDistances();
-    this._minDistances.set(srcIata, 0);
+    this._minDistances.set(srcIata, { distance: 0, hops: [] });
 
     while (visited.size != this._adjMap.size) {
-      const { vertex, minDistance } = this.getVertexWithMinDistance(
+      const { vertex, currentBestPath } = Graph.getVertexWithMinDistance(
         this._minDistances,
         visited,
       );
 
-      if (minDistance === Infinity) {
+      if (currentBestPath.distance === Infinity) {
         break;
       }
 
@@ -41,42 +46,49 @@ export class Graph {
           return;
         }
 
-        const potentialMinDistance = minDistance + distance;
-        const currentMinDistance = this._minDistances.get(iata);
+        const potentialMinDistance = currentBestPath.distance + distance;
+        const bestPath = this._minDistances.get(iata);
 
-        if (potentialMinDistance < currentMinDistance) {
-          this._minDistances[iata] = potentialMinDistance;
+        if (potentialMinDistance < currentBestPath) {
+          let currentHops = bestPath.hops;
+          currentHops = _.dropRight(currentHops);
+          currentHops.push(iata);
+          this._minDistances.set(iata, {
+            distance: potentialMinDistance,
+            hops: currentHops,
+          });
         }
       });
     }
-    return _.filter(this._minDistances, (value) => {
-      return value !== Infinity;
+
+    return _.omitBy(this._minDistances, (value) => {
+      return value === Infinity;
     });
   }
 
   private initMinDistances() {
     for (const iata of this._adjMap.keys()) {
-      this._minDistances.set(iata, Infinity);
+      this._minDistances.set(iata, { distance: Infinity, hops: [] });
     }
   }
 
-  private getVertexWithMinDistance(
-    minDistances: Map<string, number>,
+  private static getVertexWithMinDistance(
+    minDistances: Map<string, IBestPath>,
     visited: Set<string>,
   ) {
-    let minDistance = Infinity;
+    let currentBestPath = null;
     let vertex = null;
 
-    for (const [iata, distance] of minDistances.entries()) {
+    for (const [iata, bestPath] of minDistances.entries()) {
       if (visited.has(iata)) {
         continue;
       }
-      if (distance <= minDistance) {
+      if (bestPath.distance <= Infinity) {
         vertex = iata;
-        minDistance = distance;
+        currentBestPath = bestPath;
       }
     }
 
-    return { vertex, minDistance };
+    return { vertex, currentBestPath };
   }
 }
