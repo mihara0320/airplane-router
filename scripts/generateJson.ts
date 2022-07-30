@@ -12,12 +12,12 @@ const CONIFGS: IConfig[] = [
   {
     filename: 'airports',
     colParser: {
-      airportID: 'omit',
+      airportID: 'string',
       name: 'omit',
       city: 'omit',
       country: 'omit',
       iata: 'string',
-      icao: 'omit',
+      icao: 'string',
       latitude: 'number',
       longitude: 'number',
       altitude: 'omit',
@@ -50,9 +50,9 @@ const CONIFGS: IConfig[] = [
       airline: 'omit',
       airlineID: 'omit',
       sourceAirport: 'string',
-      sourceAirportID: 'omit',
+      sourceAirportID: 'string',
       destinationAirport: 'string',
-      destinationAirportID: 'omit',
+      destinationAirportID: 'string',
       codeshare: 'omit',
       stops: 'omit',
       equipment: 'omit',
@@ -72,7 +72,14 @@ const CONIFGS: IConfig[] = [
 ];
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
-
+const DATABASE_DATA_DIR = path.join(
+  __dirname,
+  '..',
+  'src',
+  'database',
+  'providers',
+  'data',
+);
 export const getJsonFromCSVFile = async (config: IConfig) => {
   return csv({
     noheader: true,
@@ -84,9 +91,9 @@ export const getJsonFromCSVFile = async (config: IConfig) => {
 
 const conversion = CONIFGS.map(async (config) => {
   const jsonData = await getJsonFromCSVFile(config);
-  console.log(jsonData);
+
   await fs.writeFileSync(
-    path.join(DATA_DIR, `${config.filename}.json`),
+    path.join(DATABASE_DATA_DIR, `${config.filename}.json`),
     JSON.stringify(jsonData),
   );
 });

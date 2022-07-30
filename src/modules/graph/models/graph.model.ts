@@ -3,7 +3,7 @@ import { Edge } from '@modules/graph/models/edge.model';
 
 export interface IPath {
   totalDistance: number;
-  paths: Edge[];
+  previousEdge: Edge;
 }
 
 const customPriorityComparator = (a: [string, number], b: [string, number]) =>
@@ -22,22 +22,21 @@ export class Graph {
     }
   }
 
-  dijkstras(start: string) {
+  dijkstra(start: string) {
     const minDistances = new Map<string, IPath>();
-    const visited = new Set<string>();
     const initialDistances: [string, number][] = [];
 
     for (const iata of this._adjMap.keys()) {
       minDistances.set(iata, {
         totalDistance: Infinity,
-        paths: [],
+        previousEdge: null,
       });
       initialDistances.push([iata, Infinity]);
     }
 
     minDistances.set(start, {
       totalDistance: 0,
-      paths: [],
+      previousEdge: null,
     });
 
     const minHeap = new Heap<[string, number]>(customPriorityComparator);
@@ -46,12 +45,6 @@ export class Graph {
 
     while (!minHeap.isEmpty()) {
       const [vertex, currentMinDistance] = minHeap.poll();
-
-      if (visited.has(vertex)) {
-        continue;
-      }
-
-      visited.add(vertex);
 
       if (currentMinDistance === Infinity) {
         break;
@@ -67,7 +60,7 @@ export class Graph {
 
         if (currentDistance < currentPath?.totalDistance) {
           currentPath.totalDistance = currentDistance;
-          currentPath.paths.push(edge);
+          currentPath.previousEdge = edge;
 
           minDistances.set(dest, currentPath);
           minHeap.push([dest, currentDistance]);

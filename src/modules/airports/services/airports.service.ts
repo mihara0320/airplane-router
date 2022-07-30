@@ -6,13 +6,13 @@ import { IAirport } from '@database/interfaces/airport.interface';
 
 @Injectable()
 export class AirportsService {
-  private readonly _maxLayover;
+  private readonly _maxLegs;
 
   constructor(
     private configService: ConfigService,
     private dataService: DataService,
   ) {
-    this._maxLayover = configService.get<number>('maxLayover');
+    this._maxLegs = configService.get<number>('maxLegs');
   }
 
   findAll(): IAirport[] {
@@ -37,7 +37,7 @@ export class AirportsService {
   //     airports.add(airport.iata);
   //   }
   //
-  //   if (depth <= this._maxLayover) {
+  //   if (depth <= this._maxLegs) {
   //     const routes = this.routesService.findAllForAirport(airport.iata);
   //     routes.forEach((route) => {
   //       let destination;

@@ -26,10 +26,10 @@ describe('Graph Model', () => {
     graph = module.get<Graph>('GRAPH_DATA');
   });
 
-  it('dijkstras test', () => {
+  it('dijkstra test', () => {
     const src = 'TLL';
     const dest = 'NRT';
-    const shortestPaths = graph.dijkstras(src);
+    const shortestPaths = graph.dijkstra(src);
     const pathTo = shortestPaths.get(dest);
     expect(pathTo).toBe({});
   });
