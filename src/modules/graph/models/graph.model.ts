@@ -1,9 +1,16 @@
-import { Edge } from '@modules/graph/models/edge.model';
+import Heap from 'heap-js';
 import * as _ from 'lodash';
+import { Edge } from '@modules/graph/models/edge.model';
+
+interface IPath {
+  totalDistance: number;
+  paths: string[];
+  depth: number;
+}
 
 export class Graph {
   _adjMap: Map<string, Edge[]> = new Map();
-  _minDistances: Map<string, number> = new Map();
+  _minDistances: Map<string, IPath>;
 
   addEdge(iata: string, edge: Edge): void {
     if (this._adjMap.has(iata)) {
@@ -15,18 +22,34 @@ export class Graph {
     }
   }
 
-  findShortestPaths(srcIata: string) {
-    const visited = new Set<string>();
-    this.initMinDistances();
-    this._minDistances.set(srcIata, 0);
+  dijkstras(start: string) {
+    const minHeap = new Heap();
+    const minDistances = new Map<string, IPath>();
 
-    while (visited.size != this._adjMap.size) {
-      const { vertex, minDistance } = Graph.getVertexWithMinDistance(
+    for (const iata of this._adjMap.keys()) {
+      minDistances.set(iata, {
+        totalDistance: Infinity,
+        paths: [],
+        depth: 0,
+      });
+    }
+
+    const visited = new Set<string>();
+    let currentDepth = 0;
+
+    this._minDistances.set(start, {
+      totalDistance: 0,
+      paths: [],
+      depth: currentDepth,
+    });
+
+    while (visited.size < this._adjMap.size) {
+      const { vertex, currentMinDistance } = Graph.getVertexWithMinDistance(
         this._minDistances,
         visited,
       );
 
-      if (minDistance === Infinity) {
+      if (currentMinDistance === Infinity) {
         break;
       }
 
@@ -34,49 +57,70 @@ export class Graph {
 
       const edges = this._adjMap.get(vertex);
 
-      edges.forEach((edge) => {
+      for (const edge of edges) {
         const { iata, distance } = edge;
 
         if (visited.has(iata)) {
-          return;
+          continue;
         }
 
-        const potentialMinDistance = minDistance + distance;
-        const currentMinDistance = this._minDistances.get(iata);
+        const currentDistance = currentMinDistance + distance;
+        const currentPath = this._minDistances.get(iata);
 
-        if (potentialMinDistance < currentMinDistance) {
-          this._minDistances[iata] = potentialMinDistance;
+        if (currentDistance < currentPath?.totalDistance) {
+          currentPath.totalDistance = currentDistance;
+
+          currentPath.paths.push(vertex);
+
+          if (currentDepth === currentPath.depth) {
+            currentPath.paths.push(iata);
+            currentPath.depth += 1;
+          } else {
+            const paths = _.dropRight(currentPath.paths);
+            currentPath.paths = _.concat(paths, [iata]);
+          }
+
+          this._minDistances.set(iata, currentPath);
         }
+      }
+
+      const arr = Array.from(this._minDistances);
+      const de = _.filter(arr, (o) => {
+        return o[1].totalDistance !== Infinity;
       });
+
+      currentDepth += 1;
     }
-    return _.omitBy(this._minDistances, (value) => {
-      return value === Infinity;
+
+    const arr = Array.from(this._minDistances);
+    const de = _.filter(arr, (o) => {
+      return o[1].totalDistance !== Infinity;
+    });
+
+    const de1 = _.orderBy(de, (o) => o[1].paths.length, ['desc']);
+    return de1;
+    return _.omitBy(this._minDistances, (path: IPath) => {
+      return path.totalDistance === Infinity;
     });
   }
 
-  private initMinDistances() {
-    for (const iata of this._adjMap.keys()) {
-      this._minDistances.set(iata, Infinity);
-    }
-  }
-
   private static getVertexWithMinDistance(
-    minDistances: Map<string, number>,
+    minDistances: Map<string, IPath>,
     visited: Set<string>,
   ) {
-    let minDistance = Infinity;
+    let currentMinDistance = Infinity;
     let vertex = null;
 
-    for (const [iata, distance] of minDistances.entries()) {
+    for (const [iata, currentPath] of minDistances.entries()) {
       if (visited.has(iata)) {
         continue;
       }
-      if (distance <= minDistance) {
+      if (currentPath.totalDistance <= currentMinDistance) {
         vertex = iata;
-        minDistance = distance;
+        currentMinDistance = currentPath.totalDistance;
       }
     }
 
-    return { vertex, minDistance };
+    return { vertex, currentMinDistance };
   }
 }
