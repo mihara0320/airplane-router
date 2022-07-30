@@ -22,34 +22,4 @@ export class AirportsService {
   findOne(iata: string): IAirport {
     return this.dataService.airports.get(iata);
   }
-
-  // findAllAirportsInRange(fromIata: string) {
-  //   const airport = this.findOne(fromIata);
-  //   return this.getAllAirportsInRange(airport, new Set<string>(), 0);
-  // }
-
-  // getAllAirportsInRange(airport: IAirport, airports: Set<string>, depth = 0) {
-  //   if (!airport) {
-  //     return;
-  //   }
-  //
-  //   if (!airports.has(airport.iata)) {
-  //     airports.add(airport.iata);
-  //   }
-  //
-  //   if (depth <= this._maxLegs) {
-  //     const routes = this.routesService.findAllForAirport(airport.iata);
-  //     routes.forEach((route) => {
-  //       let destination;
-  //       try {
-  //         destination = this.findOne(route.destinationAirport);
-  //         return this.getAllAirportsInRange(destination, airports, depth + 1);
-  //       } catch (e) {
-  //         console.log(`Airport not found: ${route.destinationAirport}`);
-  //       }
-  //     });
-  //   }
-  //
-  //   return airports;
-  // }
 }
