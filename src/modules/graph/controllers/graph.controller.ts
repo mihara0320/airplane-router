@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { GraphService } from '@modules/graph/services/graph.service';
 
 @Controller('graph')
@@ -11,7 +11,7 @@ export class GraphController {
     const shortestPath = this.graphService.findShortestPath(src, dest);
     const result = {
       distance: shortestPath.totalDistance,
-      paths: [src, ...shortestPath.paths, dest],
+      paths: [...shortestPath.paths],
     };
     return result;
   }

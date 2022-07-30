@@ -3,7 +3,7 @@ import { Edge } from '@modules/graph/models/edge.model';
 
 export interface IPath {
   totalDistance: number;
-  paths: string[];
+  paths: Edge[];
 }
 
 const customPriorityComparator = (a: [string, number], b: [string, number]) =>
@@ -24,6 +24,7 @@ export class Graph {
 
   dijkstras(start: string) {
     const minDistances = new Map<string, IPath>();
+    const visited = new Set<string>();
     const initialDistances: [string, number][] = [];
 
     for (const iata of this._adjMap.keys()) {
@@ -33,6 +34,7 @@ export class Graph {
       });
       initialDistances.push([iata, Infinity]);
     }
+
     minDistances.set(start, {
       totalDistance: 0,
       paths: [],
@@ -45,25 +47,32 @@ export class Graph {
     while (!minHeap.isEmpty()) {
       const [vertex, currentMinDistance] = minHeap.poll();
 
+      if (visited.has(vertex)) {
+        continue;
+      }
+
+      visited.add(vertex);
+
       if (currentMinDistance === Infinity) {
         break;
       }
 
       const edges = this._adjMap.get(vertex);
-      edges.forEach((edge) => {
-        const { iata, distance } = edge;
+
+      for (const edge of edges) {
+        const { dest, distance } = edge;
 
         const currentDistance = currentMinDistance + distance;
-        const currentPath = minDistances.get(iata);
+        const currentPath = minDistances.get(dest);
 
         if (currentDistance < currentPath?.totalDistance) {
           currentPath.totalDistance = currentDistance;
-          currentPath.paths.push(vertex);
+          currentPath.paths.push(edge);
 
-          minDistances.set(iata, currentPath);
-          minHeap.push([iata, currentDistance]);
+          minDistances.set(dest, currentPath);
+          minHeap.push([dest, currentDistance]);
         }
-      });
+      }
     }
     return minDistances;
   }

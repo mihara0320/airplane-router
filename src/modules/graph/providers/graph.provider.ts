@@ -25,7 +25,7 @@ export const GraphProvider = {
         }
 
         const distance = geolibService.getDistanceInKm(srcAirport, destAirport);
-        const edge = new Edge(destAirport.iata, distance);
+        const edge = new Edge(srcAirport.iata, destAirport.iata, distance);
         graph.addEdge(srcAirport.iata, edge);
       });
     });
