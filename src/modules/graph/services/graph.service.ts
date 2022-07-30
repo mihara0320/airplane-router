@@ -18,4 +18,9 @@ export class GraphService {
   getGraph() {
     return this._graph;
   }
+
+  findShortestPath(src: string, dest: string) {
+    const mimDistances = this._graph.dijkstras(src);
+    return mimDistances.get(dest);
+  }
 }

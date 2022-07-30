@@ -27,7 +27,10 @@ describe('Graph Model', () => {
   });
 
   it('dijkstras test', () => {
-    const result = graph.dijkstras('HEL');
-    expect(result).toBe('');
+    const src = 'TLL';
+    const dest = 'NRT';
+    const shortestPaths = graph.dijkstras(src);
+    const pathTo = shortestPaths.get(dest);
+    expect(pathTo).toBe({});
   });
 });
