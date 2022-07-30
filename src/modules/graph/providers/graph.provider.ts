@@ -11,7 +11,7 @@ export const GraphProvider = {
     airportsService: AirportsService,
     routeService: RoutesService,
     geolibService: GeolibService,
-  ) => {
+  ): Graph => {
     const graph = new Graph();
     const airports = airportsService.findAll();
     airports.forEach((srcAirport) => {

@@ -1,6 +1,7 @@
-import { Edge, EdgeTracker } from '@modules/graph/models/edge.model';
+import { Edge } from '@modules/graph/models/edge.model';
 import { AdjacencyList } from '@modules/graph/models/adjacency-list.model';
 import { HeapItem, MinHeap } from '@modules/graph/models/min-heap.model';
+import { MinDistanceList } from '@modules/graph/models/min-distance-list.model';
 
 export class Graph {
   adjacencyList: AdjacencyList = new AdjacencyList();
@@ -15,8 +16,15 @@ export class Graph {
     }
   }
 
-  static Dijkstra(adjacencyList: AdjacencyList, start: string) {
-    const minDistances = new Map<string, EdgeTracker>();
+  /**
+   * @description Dijkstra's algorithm implementation
+   * @see [Dijkstra's algorithm implementation guide - geeksforgeeks](https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/)
+   */
+  static Dijkstra(
+    adjacencyList: AdjacencyList,
+    start: string,
+  ): MinDistanceList {
+    const minDistances = new MinDistanceList();
     const initialDistances: HeapItem[] = [];
 
     for (const iata of adjacencyList.keys()) {
