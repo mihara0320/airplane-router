@@ -20,7 +20,7 @@ export class GraphService {
   }
 
   findShortestPath(src: string, dest: string) {
-    const mimDistances = this._graph.dijkstra(src);
+    const mimDistances = Graph.Dijkstra(this._graph.adjacencyList, src);
     const shortestPathToDest = mimDistances.get(dest);
     const paths = [];
 

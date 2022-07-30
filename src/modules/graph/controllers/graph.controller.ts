@@ -8,8 +8,6 @@ export class GraphController {
   @Get()
   find(@Query() query: { src: string; dest: string }) {
     const { src, dest } = query;
-    const shortestPath = this.graphService.findShortestPath(src, dest);
-
-    return shortestPath;
+    return this.graphService.findShortestPath(src, dest);
   }
 }

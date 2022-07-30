@@ -1,32 +1,25 @@
-import Heap from 'heap-js';
-import { Edge } from '@modules/graph/models/edge.model';
-
-export interface IPath {
-  totalDistance: number;
-  previousEdge: Edge;
-}
-
-const customPriorityComparator = (a: [string, number], b: [string, number]) =>
-  a[1] - b[1];
+import { Edge, EdgeTracker } from '@modules/graph/models/edge.model';
+import { AdjacencyList } from '@modules/graph/models/adjacency-list.model';
+import { HeapItem, MinHeap } from '@modules/graph/models/min-heap.model';
 
 export class Graph {
-  _adjMap: Map<string, Edge[]> = new Map();
+  adjacencyList: AdjacencyList = new AdjacencyList();
 
   addEdge(iata: string, edge: Edge): void {
-    if (this._adjMap.has(iata)) {
-      const edges = this._adjMap.get(iata);
+    if (this.adjacencyList.has(iata)) {
+      const edges = this.adjacencyList.get(iata);
       edges.push(edge);
-      this._adjMap.set(iata, edges);
+      this.adjacencyList.set(iata, edges);
     } else {
-      this._adjMap.set(iata, [edge]);
+      this.adjacencyList.set(iata, [edge]);
     }
   }
 
-  dijkstra(start: string) {
-    const minDistances = new Map<string, IPath>();
-    const initialDistances: [string, number][] = [];
+  static Dijkstra(adjacencyList: AdjacencyList, start: string) {
+    const minDistances = new Map<string, EdgeTracker>();
+    const initialDistances: HeapItem[] = [];
 
-    for (const iata of this._adjMap.keys()) {
+    for (const iata of adjacencyList.keys()) {
       minDistances.set(iata, {
         totalDistance: Infinity,
         previousEdge: null,
@@ -39,7 +32,7 @@ export class Graph {
       previousEdge: null,
     });
 
-    const minHeap = new Heap<[string, number]>(customPriorityComparator);
+    const minHeap = new MinHeap();
     minHeap.init(initialDistances);
     minHeap.replace([start, 0]);
 
@@ -50,7 +43,7 @@ export class Graph {
         break;
       }
 
-      const edges = this._adjMap.get(vertex);
+      const edges = adjacencyList.get(vertex);
 
       for (const edge of edges) {
         const { dest, distance } = edge;
