@@ -36,3 +36,4 @@ These switches are not considered as part of the legs/layover/hop count, but the
 * clean config
 * add swagger?
 * add validations & errors
+* host doc at github?
