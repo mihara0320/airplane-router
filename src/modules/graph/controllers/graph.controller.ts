@@ -15,4 +15,12 @@ export class GraphController {
     };
     return result;
   }
+
+  @Get('/vertex')
+  findVertex(@Query() query: { src: string; dest: string }) {
+    const { src, dest } = query;
+    const vertex = this.graphService.getVertex(src);
+
+    return vertex;
+  }
 }
