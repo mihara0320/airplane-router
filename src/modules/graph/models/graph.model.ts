@@ -21,7 +21,7 @@ export class Graph {
     this._minDistances.set(srcIata, 0);
 
     while (visited.size != this._adjMap.size) {
-      const { vertex, minDistance } = this.getVertexWithMinDistance(
+      const { vertex, minDistance } = Graph.getVertexWithMinDistance(
         this._minDistances,
         visited,
       );
@@ -49,8 +49,8 @@ export class Graph {
         }
       });
     }
-    return _.filter(this._minDistances, (value) => {
-      return value !== Infinity;
+    return _.omitBy(this._minDistances, (value) => {
+      return value === Infinity;
     });
   }
 
@@ -60,7 +60,7 @@ export class Graph {
     }
   }
 
-  private getVertexWithMinDistance(
+  private static getVertexWithMinDistance(
     minDistances: Map<string, number>,
     visited: Set<string>,
   ) {
