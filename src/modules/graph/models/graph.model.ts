@@ -86,4 +86,8 @@ export class Graph {
     }
     return minDistances;
   }
+
+  static VisualizePath(src: string, sortedEdges: Edge[]): string {
+    return `${src} -> ${sortedEdges.map((edges) => edges.dest).join(' -> ')}`;
+  }
 }

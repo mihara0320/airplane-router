@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Graph } from '@modules/graph/models/graph.model';
@@ -29,10 +31,11 @@ export class GraphService {
       previousEdge = mimDistances.get(previousEdge.src).previousEdge;
     }
 
+    const sortedEdges = _.reverse(edges);
     return {
-      totalDistance: shortestPathToDest.totalDistance,
-      path: '',
-      edges,
+      totalDistance: `${shortestPathToDest.totalDistance} KM`,
+      path: Graph.VisualizePath(src, sortedEdges),
+      edges: sortedEdges,
     };
   }
 }
