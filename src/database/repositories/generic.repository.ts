@@ -7,6 +7,7 @@ export class GenericRepository<T, RawData> implements IGenericRepository<T> {
     this._data = data;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   get(iata: string): T {
     return undefined;
   }
