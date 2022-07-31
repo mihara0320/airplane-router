@@ -1,3 +1,3 @@
 export default () => ({
-  maxLegs: 4,
+  maxLegs: 3,
 });

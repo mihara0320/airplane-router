@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { Graph } from '@modules/graph/models/graph.model';
 import { Edge } from '@modules/graph/models/edge.model';
 import { IShortestPathResult } from '@modules/graph/interfaces/graph.interface';
+import { PathNotFound } from '@modules/graph/errors';
 
 @Injectable()
 export class GraphService {
@@ -32,6 +33,13 @@ export class GraphService {
     }
 
     const sortedEdges = _.reverse(edges);
+
+    if (sortedEdges.length > 0 && sortedEdges[0].src !== src) {
+      throw new PathNotFound(
+        `Path from ${src} to ${dest} could not be found for less than ${this._maxLegs} layovers`,
+      );
+    }
+
     return {
       totalDistanceInKm: shortestPathToDest.totalDistance,
       path: Graph.VisualizePath(src, sortedEdges),

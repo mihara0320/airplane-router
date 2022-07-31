@@ -58,4 +58,10 @@ describe('GraphController (e2e)', () => {
       .get('/graph?src=TAL&dest=HND')
       .expect(422);
   });
+
+  it('throws exception to a path more than 3 layovers', () => {
+    return request(app.getHttpServer())
+      .get('/graph?src=TAY&dest=CHC')
+      .expect(400);
+  });
 });

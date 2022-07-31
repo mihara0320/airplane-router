@@ -6,6 +6,7 @@ import { AirportsService } from '@modules/airports/services/airports.service';
 import {
   IataNotFoundException,
   IataNotProvidedException,
+  PathNotFoundException,
 } from '@modules/graph/errors';
 
 @Controller('graph')
@@ -34,9 +35,13 @@ export class GraphController {
       throw new IataNotFoundException(e.message);
     }
 
-    return this.graphService.findShortestPath(
-      srcAirport.iata,
-      destAirport.iata,
-    );
+    try {
+      return this.graphService.findShortestPath(
+        srcAirport.iata,
+        destAirport.iata,
+      );
+    } catch (e) {
+      throw new PathNotFoundException(e.message);
+    }
   }
 }
