@@ -33,7 +33,7 @@ export class GraphService {
 
     const sortedEdges = _.reverse(edges);
     return {
-      totalDistance: `${shortestPathToDest.totalDistance} KM`,
+      totalDistanceInKm: shortestPathToDest.totalDistance,
       path: Graph.VisualizePath(src, sortedEdges),
       edges: sortedEdges,
     };
