@@ -25,6 +25,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "generateJson": "ts-node scripts/generateJson.ts",
     "doc": "npx @compodoc/compodoc -p tsconfig.json -s",
+    "doc:build": "npx @compodoc/compodoc -p tsconfig.json",
     "prepare": "husky install"
   },
   "dependencies": {
