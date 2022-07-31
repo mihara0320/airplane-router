@@ -1,11 +1,18 @@
-## Documentation
-https://mihara0320.github.io/airplane-router/
 
 ## Description
+This repository is intended to demonstrate a way of finding the shortest path from one airport to another ([complete task description](TASK.md)).  
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Documentation
+Online documentation: https://mihara0320.github.io/airplane-router/
 
 ## Installation
+
+### Prerequisite
+
+| Tool    | Version  |
+|---------|----------|
+| node.js | v16.16.0 |
+
 
 ```bash
 $ npm install
