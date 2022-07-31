@@ -12,7 +12,7 @@ export class RoutesService {
     return this.dataService.routes.getAll();
   }
 
-  findAllForAirport(iata: string) {
+  findAllForAirport(iata: string): IRoute[] {
     const routes = this.dataService.routes.getAll();
     return _.filter(routes, (data) => data.sourceAirport === iata);
   }
