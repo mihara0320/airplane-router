@@ -356,7 +356,7 @@ export class RouteRepository extends GenericRepository&lt;Route, Route[]&gt; {
   }
 
   get(iata: string): IRoute {
-    return _.find(this._data, (o) &#x3D;&gt; o.sourceAirport &#x3D;&#x3D;&#x3D; iata);
+    return _.find&lt;IRoute&gt;(this._data, (o) &#x3D;&gt; o.sourceAirport &#x3D;&#x3D;&#x3D; iata);
   }
 
   getAll(): IRoute[] {

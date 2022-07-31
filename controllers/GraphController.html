@@ -130,8 +130,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="11"
-                            class="link-to-prism">src/modules/graph/controllers/graph.controller.ts:11</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="20"
+                            class="link-to-prism">src/modules/graph/controllers/graph.controller.ts:20</a></div>
                 </td>
             </tr>
 
@@ -187,15 +187,47 @@
 import { GraphService } from &#x27;@modules/graph/services/graph.service&#x27;;
 import { IShortestPathResult } from &#x27;@modules/graph/interfaces/graph.interface&#x27;;
 import { FindPathDto } from &#x27;@modules/graph/dto/graph.dto&#x27;;
+import { AirportsService } from &#x27;@modules/airports/services/airports.service&#x27;;
+import {
+  IataNotFoundException,
+  IataNotProvidedException,
+  PathNotFoundException,
+} from &#x27;@modules/graph/errors&#x27;;
 
 @Controller(&#x27;graph&#x27;)
 export class GraphController {
-  constructor(private graphService: GraphService) {}
+  constructor(
+    private graphService: GraphService,
+    private airportsService: AirportsService,
+  ) {}
 
   @Get()
   findPath(@Query() query: FindPathDto): IShortestPathResult {
     const { src, dest } &#x3D; query;
-    return this.graphService.findShortestPath(src, dest);
+
+    if (!src || !dest) {
+      throw new IataNotProvidedException(
+        &#x27;Please provide both src &amp; dest IATA code in query&#x27;,
+      );
+    }
+
+    let srcAirport,
+      destAirport &#x3D; null;
+    try {
+      srcAirport &#x3D; this.airportsService.findOne(src);
+      destAirport &#x3D; this.airportsService.findOne(dest);
+    } catch (e) {
+      throw new IataNotFoundException(e.message);
+    }
+
+    try {
+      return this.graphService.findShortestPath(
+        srcAirport.iata,
+        destAirport.iata,
+      );
+    } catch (e) {
+      throw new PathNotFoundException(e.message);
+    }
   }
 }
 </code></pre>

@@ -96,9 +96,9 @@
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#totalDistance" 
+                                        <a href="#totalDistanceInKm" 
 >
-                                            totalDistance
+                                            totalDistanceInKm
                                         </a>
                                 </li>
                             </ul>
@@ -182,9 +182,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="totalDistance"></a>
-                                        <span class="name "><b>totalDistance</b>
-                                            <a href="#totalDistance">
+                                        <a name="totalDistanceInKm"></a>
+                                        <span class="name "><b>totalDistanceInKm</b>
+                                            <a href="#totalDistanceInKm">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -192,7 +192,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>totalDistance:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                        <code>totalDistanceInKm:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -219,7 +219,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Edge } from &#x27;@modules/graph/models/edge.model&#x27;;
 
 export interface IShortestPathResult {
-  totalDistance: number;
+  totalDistanceInKm: number;
   path: string;
   edges: Edge[];
 }

@@ -28,7 +28,7 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content injectable">
+               <div class="content class">
                    <div class="content-data">
 
 
@@ -38,9 +38,13 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >GeolibService</li>
+  <li>Classes</li>
+  <li >IataNotProvidedException</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -58,158 +62,109 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/common/services/geolib/geolib.service.ts</code>
+            <code>src/modules/graph/errors/index.ts</code>
         </p>
 
 
 
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                    <code>HttpException</code>
+            </p>
+
+
 
 
             <section>
-    <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="3" class="link-to-prism">src/modules/graph/errors/index.ts:3</a></div>
+                            </td>
+                        </tr>
 
                 <tr>
                     <td class="col-md-4">
-                        <h6><b>Methods</b></h6>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>message</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <ul class="index-list">
-                            <li>
-                                <a href="#getDistanceInKm" >getDistanceInKm</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-
-
-
-
-
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 </section>
 
 
-            <section>
-    
-    <h3 id="methods">
-        Methods
-    </h3>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getDistanceInKm"></a>
-                    <span class="name">
-                        <span ><b>getDistanceInKm</b></span>
-                        <a href="#getDistanceInKm"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>getDistanceInKm(from: GeolibInputCoordinates, to: GeolibInputCoordinates)</code>
-                </td>
-            </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="7"
-                            class="link-to-prism">src/common/services/geolib/geolib.service.ts:7</a></div>
-                </td>
-            </tr>
 
 
-            <tr>
-                <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>from</td>
-                                    <td>
-                                            <code>GeolibInputCoordinates</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>to</td>
-                                    <td>
-                                            <code>GeolibInputCoordinates</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</section>
 
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
-import { convertDistance, getDistance } from &#x27;geolib&#x27;;
-import { GeolibInputCoordinates } from &#x27;geolib/es/types&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpException } from &#x27;@nestjs/common&#x27;;
 
-@Injectable()
-export class GeolibService {
-  getDistanceInKm(
-    from: GeolibInputCoordinates,
-    to: GeolibInputCoordinates,
-  ): number {
-    const distance &#x3D; getDistance(from, to);
-    const distanceInKm &#x3D; convertDistance(distance, &#x27;km&#x27;);
+export class IataNotProvidedException extends HttpException {
+  constructor(message: string) {
+    super(message, 400);
+  }
+}
 
-    return Number(distanceInKm.toFixed(3));
+export class IataNotFoundException extends HttpException {
+  constructor(message: string) {
+    super(message, 422);
+  }
+}
+
+export class PathNotFoundException extends HttpException {
+  constructor(message: string) {
+    super(message, 400);
+  }
+}
+
+export class PathNotFound extends Error {
+  constructor(message: string) {
+    super(message);
   }
 }
 </code></pre>
     </div>
-
 </div>
-
-
-
-
 
 
 
@@ -244,8 +199,8 @@ export class GeolibService {
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'GeolibService.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'IataNotProvidedException.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

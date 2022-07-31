@@ -125,7 +125,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/modules/graph/services/graph.service.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/modules/graph/services/graph.service.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -199,8 +199,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="20"
-                            class="link-to-prism">src/modules/graph/services/graph.service.ts:20</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="23"
+                            class="link-to-prism">src/modules/graph/services/graph.service.ts:23</a></div>
                 </td>
             </tr>
 
@@ -287,7 +287,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/modules/graph/services/graph.service.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/modules/graph/services/graph.service.ts:13</a></div>
                         </td>
                     </tr>
 
@@ -309,7 +309,7 @@
             </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/modules/graph/services/graph.service.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/modules/graph/services/graph.service.ts:12</a></div>
                         </td>
                     </tr>
 
@@ -322,11 +322,14 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable } from &#x27;@nestjs/common&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as _ from &#x27;lodash&#x27;;
+
+import { Inject, Injectable } from &#x27;@nestjs/common&#x27;;
 import { ConfigService } from &#x27;@nestjs/config&#x27;;
 import { Graph } from &#x27;@modules/graph/models/graph.model&#x27;;
 import { Edge } from &#x27;@modules/graph/models/edge.model&#x27;;
 import { IShortestPathResult } from &#x27;@modules/graph/interfaces/graph.interface&#x27;;
+import { PathNotFound } from &#x27;@modules/graph/errors&#x27;;
 
 @Injectable()
 export class GraphService {
@@ -353,10 +356,18 @@ export class GraphService {
       previousEdge &#x3D; mimDistances.get(previousEdge.src).previousEdge;
     }
 
+    const sortedEdges &#x3D; _.reverse(edges);
+
+    if (sortedEdges.length &gt; 0 &amp;&amp; sortedEdges[0].src !&#x3D;&#x3D; src) {
+      throw new PathNotFound(
+        &#x60;Path from ${src} to ${dest} could not be found for less than ${this._maxLegs} layovers&#x60;,
+      );
+    }
+
     return {
-      totalDistance: shortestPathToDest.totalDistance,
-      path: &#x27;&#x27;,
-      edges,
+      totalDistanceInKm: shortestPathToDest.totalDistance,
+      path: Graph.VisualizePath(src, sortedEdges),
+      edges: sortedEdges,
     };
   }
 }

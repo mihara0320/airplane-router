@@ -104,6 +104,10 @@
                                     <span class="modifier">Static</span>
                                 <a href="#Dijkstra" >Dijkstra</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#VisualizePath" >VisualizePath</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -272,15 +276,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="28"
-                            class="link-to-prism">src/modules/graph/models/graph.model.ts:28</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">src/modules/graph/models/graph.model.ts:29</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>See <a href="https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/">Dijkstra&#39;s algorithm implementation guide - geeksforgeeks</a></p>
+                    <div class="io-description"><p>See <a href="https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/">Dijkstra&#39;s algorithm implementation guide - geeksforgeeks</a>
+See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.com/books/data-structures-algorithms-in-swift/v3.0/chapters/22-the-heap-data-structure">https://www.raywenderlich.com/books/data-structures-algorithms-in-swift/v3.0/chapters/22-the-heap-data-structure</a>)</p>
 </div>
 
                     <div class="io-description">
@@ -335,6 +340,89 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="VisualizePath"></a>
+                    <span class="name">
+                        <span class="modifier">Static</span>
+                        <span ><b>VisualizePath</b></span>
+                        <a href="#VisualizePath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>VisualizePath(src: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, sortedEdges: <a href="../classes/Edge.html" target="_self">Edge[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="90"
+                            class="link-to-prism">src/modules/graph/models/graph.model.ts:90</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>src</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>sortedEdges</td>
+                                    <td>
+                                                <code><a href="../classes/Edge.html" target="_self" >Edge[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
 
@@ -371,6 +459,7 @@ export class Graph {
   /**
    * @description Dijkstra&#x27;s algorithm implementation. O((V+E) * log(V)) time | O(V) space - where V is the number of vertices and E is the number of edges in the graph
    * @see [Dijkstra&#x27;s algorithm implementation guide - geeksforgeeks](https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/)
+   * @see [Heap data structure - raywenderlich] (https://www.raywenderlich.com/books/data-structures-algorithms-in-swift/v3.0/chapters/22-the-heap-data-structure)
    */
   static Dijkstra(
     adjacencyList: AdjacencyList,
@@ -403,7 +492,7 @@ export class Graph {
 
     // O(V)
     while (!minHeap.isEmpty()) {
-      // O(1)
+      // O(log(n))
       const [vertex, currentMinDistance] &#x3D; minHeap.poll();
 
       if (currentMinDistance &#x3D;&#x3D;&#x3D; Infinity) {
@@ -431,6 +520,10 @@ export class Graph {
       }
     }
     return minDistances;
+  }
+
+  static VisualizePath(src: string, sortedEdges: Edge[]): string {
+    return &#x60;${src} -&gt; ${sortedEdges.map((edges) &#x3D;&gt; edges.dest).join(&#x27; -&gt; &#x27;)}&#x60;;
   }
 }
 </code></pre>

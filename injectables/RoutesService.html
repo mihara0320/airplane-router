@@ -79,9 +79,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#findAll" >findAll</a>
-                            </li>
-                            <li>
                                 <a href="#findAllForAirport" >findAllForAirport</a>
                             </li>
                         </ul>
@@ -154,43 +151,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="findAll"></a>
-                    <span class="name">
-                        <span ><b>findAll</b></span>
-                        <a href="#findAll"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>findAll()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="11"
-                            class="link-to-prism">src/modules/routes/services/routes.service.ts:11</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/IRoute.html" target="_self" >IRoute[]</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="findAllForAirport"></a>
                     <span class="name">
                         <span ><b>findAllForAirport</b></span>
@@ -207,8 +167,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="15"
-                            class="link-to-prism">src/modules/routes/services/routes.service.ts:15</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="11"
+                            class="link-to-prism">src/modules/routes/services/routes.service.ts:11</a></div>
                 </td>
             </tr>
 
@@ -271,10 +231,6 @@ import { IRoute } from &#x27;@database/interfaces/route.interface&#x27;;
 @Injectable()
 export class RoutesService {
   constructor(private dataService: DataService) {}
-
-  findAll(): IRoute[] {
-    return this.dataService.routes.getAll();
-  }
 
   findAllForAirport(iata: string): IRoute[] {
     const routes &#x3D; this.dataService.routes.getAll();
