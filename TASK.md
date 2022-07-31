@@ -3,6 +3,7 @@ The test task consists of two parts, the main part, and a bonus part.
 We suggest tackling the bonus part once the main objective of the service has been achieved.
 
 ## Main Task
+
 Build a JSON over HTTP API endpoint that takes as input two IATA/ICAO airport codes and provides as output a route between these two dataProvider so that:
 
 The route consists of at most 4 legs/flights (that is, 3 stops/layovers, if going from A->B, a valid route could be A->1->2->3->B, or for example A->1->B etc.) and;
@@ -28,11 +29,3 @@ These switches are not considered as part of the legs/layover/hop count, but the
 * You are free to choose any programming language (TypeScript/Node is preferred, but not mandatory)
 
 * You can ask additional questions.
-
-
-# TODO
-* add test & mock data
-* clean config
-* improve swagger (error code etc)
-* add validations & errors
-* host doc at github?

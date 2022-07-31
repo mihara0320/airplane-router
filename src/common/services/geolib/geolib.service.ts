@@ -9,6 +9,8 @@ export class GeolibService {
     to: GeolibInputCoordinates,
   ): number {
     const distance = getDistance(from, to);
-    return convertDistance(distance, 'km');
+    const distanceInKm = convertDistance(distance, 'km');
+
+    return Number(distanceInKm.toFixed(3));
   }
 }

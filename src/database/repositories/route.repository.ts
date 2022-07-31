@@ -11,7 +11,7 @@ export class RouteRepository extends GenericRepository<Route, Route[]> {
   }
 
   get(iata: string): IRoute {
-    return _.find(this._data, (o) => o.sourceAirport === iata);
+    return _.find<IRoute>(this._data, (o) => o.sourceAirport === iata);
   }
 
   getAll(): IRoute[] {

@@ -1,36 +1,42 @@
-// import { Graph } from './graph.model';
-// import { Test, TestingModule } from '@nestjs/testing';
-//
-// import { AirportsService } from '@modules/airports/services/airports.service';
-// import { RoutesService } from '@modules/routes/services/routes.service';
-// import { GeolibService } from '@common/services/geolib/geolib.service';
-// import { GraphProvider } from '@modules/graph/providers/graph.provider';
-// import { ConfigService } from '@nestjs/config';
-// import { DatabaseModule } from '@database/database.module';
+import { Graph } from './graph.model';
+import { adjList } from '@modules/graph/models/fixtures/adjacencyList';
 
 describe('Graph Model', () => {
-  // let graph: Graph;
-
-  beforeEach(async () => {
-    // const module: TestingModule = await Test.createTestingModule({
-    //   imports: [DatabaseModule],
-    //   providers: [
-    //     ConfigService,
-    //     AirportsService,
-    //     RoutesService,
-    //     GeolibService,
-    //     GraphProvider,
-    //   ],
-    // }).compile();
-    //
-    // graph = module.get<Graph>('GRAPH_DATA');
+  it('finds the shortest paths with 1 hop', () => {
+    const src = 'A';
+    const dest = 'B';
+    const minDistances = Graph.Dijkstra(adjList, src);
+    expect(minDistances.get(dest)).toEqual({
+      totalDistance: 3,
+      previousEdge: {
+        src: 'A',
+        dest: 'B',
+        distance: 3,
+      },
+    });
   });
 
-  it('dijkstra test', () => {
-    // const src = 'TLL';
-    // const dest = 'NRT';
-    // const shortestPaths = graph.dijkstra(src);
-    // const pathTo = shortestPaths.get(dest);
-    // expect(pathTo).toBe({});
+  it('finds the shortest paths with multiple hops', () => {
+    const src = 'A';
+    const dest = 'F';
+    const minDistances = Graph.Dijkstra(adjList, src);
+    expect(minDistances.get(dest)).toEqual({
+      totalDistance: 7,
+      previousEdge: {
+        src: 'E',
+        dest: 'F',
+        distance: 1,
+      },
+    });
+  });
+
+  it('does not finds the shortest paths for isolated vertex', () => {
+    const src = 'A';
+    const dest = 'G';
+    const minDistances = Graph.Dijkstra(adjList, src);
+    expect(minDistances.get(dest)).toEqual({
+      totalDistance: Infinity,
+      previousEdge: null,
+    });
   });
 });
