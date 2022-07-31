@@ -8,10 +8,6 @@ import { IRoute } from '@database/interfaces/route.interface';
 export class RoutesService {
   constructor(private dataService: DataService) {}
 
-  findAll(): IRoute[] {
-    return this.dataService.routes.getAll();
-  }
-
   findAllForAirport(iata: string): IRoute[] {
     const routes = this.dataService.routes.getAll();
     return _.filter(routes, (data) => data.sourceAirport === iata);
