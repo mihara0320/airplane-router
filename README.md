@@ -31,6 +31,38 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## API Usage
+
+### Get the shortest path between airports
+**Request Example**
+```
+http://localhost:3000/graph?src=TLL&dest=HND
+```
+**Response Example**
+```json
+{
+  "totalDistanceInKm": 8151.866,
+  "path": "TLL -> HEL -> NGO -> HND",
+  "edges": [
+    {
+      "src": "TLL",
+      "dest": "HEL",
+      "distance": 100.886
+    },
+    {
+      "src": "HEL",
+      "dest": "NGO",
+      "distance": 7769.583
+    },
+    {
+      "src": "NGO",
+      "dest": "HND",
+      "distance": 281.397
+    }
+  ]
+}
+```
+
 ## Test
 
 ```bash
