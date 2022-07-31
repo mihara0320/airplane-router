@@ -6,6 +6,11 @@ import { MinDistanceList } from '@modules/graph/models/min-distance-list.model';
 export class Graph {
   adjacencyList: AdjacencyList = new AdjacencyList();
 
+  /**
+   * @description Add edge to a vertex
+   * @param iata Unique airport id which is represented as vertex
+   * @param edge Flight connection which is represented as weighted edge between vertices
+   */
   addEdge(iata: string, edge: Edge): void {
     if (this.adjacencyList.has(iata)) {
       const edges = this.adjacencyList.get(iata);
@@ -17,7 +22,7 @@ export class Graph {
   }
 
   /**
-   * @description Dijkstra's algorithm implementation
+   * @description Dijkstra's algorithm implementation. O((V+E) * log(V)) time | O(V) space - where V is the number of vertices and E is the number of edges in the graph
    * @see [Dijkstra's algorithm implementation guide - geeksforgeeks](https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/)
    */
   static Dijkstra(
@@ -27,6 +32,7 @@ export class Graph {
     const minDistances = new MinDistanceList();
     const initialDistances: HeapItem[] = [];
 
+    // O(V)
     for (const iata of adjacencyList.keys()) {
       minDistances.set(iata, {
         totalDistance: Infinity,
@@ -41,10 +47,16 @@ export class Graph {
     });
 
     const minHeap = new MinHeap();
+
+    // O(V)
     minHeap.init(initialDistances);
+
+    // O(log(V))
     minHeap.replace([start, 0]);
 
+    // O(V)
     while (!minHeap.isEmpty()) {
+      // O(1)
       const [vertex, currentMinDistance] = minHeap.poll();
 
       if (currentMinDistance === Infinity) {
@@ -53,6 +65,7 @@ export class Graph {
 
       const edges = adjacencyList.get(vertex);
 
+      // O(E)
       for (const edge of edges) {
         const { dest, distance } = edge;
 
@@ -64,6 +77,8 @@ export class Graph {
           currentPath.previousEdge = edge;
 
           minDistances.set(dest, currentPath);
+
+          // O(log(V))
           minHeap.push([dest, currentDistance]);
         }
       }

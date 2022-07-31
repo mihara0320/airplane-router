@@ -32,7 +32,7 @@ These switches are not considered as part of the legs/layover/hop count, but the
 
 # TODO
 * add test & mock data
-* add documentation
+* add documentation / complexity comment
 * clean config
 * improve swagger (error code etc)
 * add validations & errors
