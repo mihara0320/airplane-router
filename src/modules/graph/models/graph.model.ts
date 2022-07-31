@@ -24,6 +24,7 @@ export class Graph {
   /**
    * @description Dijkstra's algorithm implementation. O((V+E) * log(V)) time | O(V) space - where V is the number of vertices and E is the number of edges in the graph
    * @see [Dijkstra's algorithm implementation guide - geeksforgeeks](https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/)
+   * @see [Heap data structure - raywenderlich] (https://www.raywenderlich.com/books/data-structures-algorithms-in-swift/v3.0/chapters/22-the-heap-data-structure)
    */
   static Dijkstra(
     adjacencyList: AdjacencyList,
@@ -56,7 +57,7 @@ export class Graph {
 
     // O(V)
     while (!minHeap.isEmpty()) {
-      // O(1)
+      // O(log(n))
       const [vertex, currentMinDistance] = minHeap.poll();
 
       if (currentMinDistance === Infinity) {
