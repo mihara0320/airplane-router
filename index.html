@@ -32,11 +32,16 @@
                    <div class="content-data">
 
 <h2 id="description">Description</h2>
-<p>This repository is intended to demonstrate a way of finding the shortest path from one airport to another (<a href="TASK.md">complete task description</a>).  </p>
-<h3 id="documentation">Documentation</h3>
-<p>Online documentation: <a href="https://mihara0320.github.io/airplane-router/">https://mihara0320.github.io/airplane-router/</a></p>
-<h2 id="installation">Installation</h2>
-<h3 id="prerequisite">Prerequisite</h3>
+<p>This repository is intended to demonstrate a way of finding the shortest path from one airport to another (<a href="TASK.md">complete task description</a>).<br>The main business logic for finding the shortest path using Dijkstra&#39;s algorithm is implemented at <a href="./src/modules/graph/models/graph.model.ts">graph.model.ts</a>.
+An implementation doc can be found at <a href="https://mihara0320.github.io/airplane-router/classes/Graph.html">Graph</a></p>
+<h3 id="references">References</h3>
+<ul>
+<li>App documentation: <a href="https://mihara0320.github.io/airplane-router/">https://mihara0320.github.io/airplane-router/</a></li>
+<li>Datasource: <a href="https://openflights.org/data.html">https://openflights.org/data.html</a></li>
+<li>Documentation: <a href="https://mihara0320.github.io/airplane-router/">https://mihara0320.github.io/airplane-router/</a></li>
+<li>Dijkstra&#39;s Algorithm: <a href="https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/">https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/</a></li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
 <table class="table table-bordered compodoc-table">
 <thead>
 <tr>
@@ -51,6 +56,13 @@
 </tr>
 </tbody>
 </table>
+<h3 id="official-installer">Official Installer</h3>
+<p><a href="https://nodejs.org/download/release/v16.16.0/">https://nodejs.org/download/release/v16.16.0/</a></p>
+<h3 id="using-nvm">Using nvm</h3>
+<div><pre class="line-numbers"><code class="language-bash">$ nvm install 16.16.0
+$ nvm use 16.16.0</code></pre></div><h3 id="using-asdf">Using asdf</h3>
+<div><pre class="line-numbers"><code class="language-bash">$ asdf install nodejs 16.16.0
+$ asdf local nodejs 16.16.0</code></pre></div><h2 id="installation">Installation</h2>
 <div><pre class="line-numbers"><code class="language-bash">$ npm install</code></pre></div><h2 id="running-the-app">Running the app</h2>
 <div><pre class="line-numbers"><code class="language-bash"># development
 $ npm run start
@@ -60,7 +72,8 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod</code></pre></div><h2 id="api-usage">API Usage</h2>
-<h3 id="get-the-shortest-path-between-airports">Get the shortest path between airports</h3>
+<h3 id="swagger-documentation">Swagger Documentation</h3>
+<div><pre class="line-numbers"><code class="language-none">http://localhost:3000/swagger</code></pre></div><h3 id="main-api-get-the-shortest-path-between-airports">Main API: Get the shortest path between airports</h3>
 <p><strong>Request Example</strong></p>
 <div><pre class="line-numbers"><code class="language-none">http://localhost:3000/graph?src=TLL&amp;dest=HND</code></pre></div><p><strong>Response Example</strong></p>
 <div><pre class="line-numbers"><code class="language-json">{
@@ -91,7 +104,16 @@ $ npm run test
 $ npm run test:e2e
 
 # test coverage
-$ npm run test:cov</code></pre></div>
+$ npm run test:cov</code></pre></div><h2 id="future-steps">Future Steps</h2>
+<ul>
+<li>Improve format &amp; lint rules</li>
+<li>Improve data validation &amp; custom errors</li>
+<li>Improve test coverage</li>
+<li>Extend the app so that it covers the bonus task</li>
+<li>Containerize application</li>
+<li>Move data to database / cache</li>
+</ul>
+
 
 
 
