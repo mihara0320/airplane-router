@@ -1,7 +1,7 @@
 
 ## Description
 This repository is intended to demonstrate a way of finding the shortest path from one airport to another ([complete task description](TASK.md)).  
-The main business logic for finding the shortest path using Dijkstra's algorithm is implemented at [graph.model.ts](./src/modules/graph/models/graph.model.ts).
+The main business logic for finding the shortest path using Dijkstra's algorithm which is implemented at [graph.model.ts](./src/modules/graph/models/graph.model.ts).
 An implementation doc can be found at [Graph](https://mihara0320.github.io/airplane-router/classes/Graph.html)
 
 ### References
