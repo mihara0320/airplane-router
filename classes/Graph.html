@@ -184,14 +184,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="14"
-                            class="link-to-prism">src/modules/graph/models/graph.model.ts:14</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="15"
+                            class="link-to-prism">src/modules/graph/models/graph.model.ts:15</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Add an edge to a vertex</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -218,7 +220,7 @@
 
 
                                     <td>
-                                        <p>Unique airport id which is represented as vertex</p>
+                                        <p>An unique IATA code which is represented as vertex</p>
 
                                     </td>
                                 </tr>
@@ -234,7 +236,7 @@
 
 
                                     <td>
-                                        <p>Flight connection which is represented as weighted edge between vertices</p>
+                                        <p>A flight connection which is represented as weighted edge between vertices</p>
 
                                     </td>
                                 </tr>
@@ -276,16 +278,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">src/modules/graph/models/graph.model.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">src/modules/graph/models/graph.model.ts:32</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>See <a href="https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/">Dijkstra&#39;s algorithm implementation guide - geeksforgeeks</a>
-See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.com/books/data-structures-algorithms-in-swift/v3.0/chapters/22-the-heap-data-structure">https://www.raywenderlich.com/books/data-structures-algorithms-in-swift/v3.0/chapters/22-the-heap-data-structure</a>)</p>
+                    <div class="io-description"><p>Dijkstra&#39;s algorithm implementation. O((V+E) * log(V)) time | O(V) space - where V is the number of vertices and E is the number of edges in the graph</p>
 </div>
 
                     <div class="io-description">
@@ -297,6 +298,7 @@ See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.co
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -311,6 +313,10 @@ See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.co
                                     </td>
 
 
+                                    <td>
+                                        <p>An adjacency list representation of airports &amp; routes</p>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>start</td>
@@ -323,6 +329,10 @@ See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.co
                                     </td>
 
 
+                                    <td>
+                                        <p>An IATA code which represent starting vertex of Dijkstra&#39;s algorithm</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -334,7 +344,8 @@ See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.co
 
                     </div>
                     <div class="io-description">
-                        
+                        <p>A map contains the shortest distance from the source airport to each airport &amp; its edge history</p>
+
                     </div>
                 </td>
             </tr>
@@ -362,14 +373,16 @@ See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.co
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="90"
-                            class="link-to-prism">src/modules/graph/models/graph.model.ts:90</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="100"
+                            class="link-to-prism">src/modules/graph/models/graph.model.ts:100</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Visualize path in string representation</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -380,6 +393,7 @@ See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.co
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -394,6 +408,10 @@ See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.co
                                     </td>
 
 
+                                    <td>
+                                        <p>An IATA code of source airport</p>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>sortedEdges</td>
@@ -406,6 +424,10 @@ See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.co
                                     </td>
 
 
+                                    <td>
+                                        <p>A List of sorted edges in visiting order</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -417,7 +439,8 @@ See [Heap data structure - raywenderlich] (<a href="https://www.raywenderlich.co
 
                     </div>
                     <div class="io-description">
-                        
+                        <p>Representation of path, such as &quot;A -&gt; B -&gt; C -&gt; D&quot;</p>
+
                     </div>
                 </td>
             </tr>
@@ -442,9 +465,10 @@ export class Graph {
   adjacencyList: AdjacencyList &#x3D; new AdjacencyList();
 
   /**
-   * @description Add edge to a vertex
-   * @param iata Unique airport id which is represented as vertex
-   * @param edge Flight connection which is represented as weighted edge between vertices
+   * @description
+   * Add an edge to a vertex
+   * @param iata An unique IATA code which is represented as vertex
+   * @param edge A flight connection which is represented as weighted edge between vertices
    */
   addEdge(iata: string, edge: Edge): void {
     if (this.adjacencyList.has(iata)) {
@@ -457,9 +481,11 @@ export class Graph {
   }
 
   /**
-   * @description Dijkstra&#x27;s algorithm implementation. O((V+E) * log(V)) time | O(V) space - where V is the number of vertices and E is the number of edges in the graph
-   * @see [Dijkstra&#x27;s algorithm implementation guide - geeksforgeeks](https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/)
-   * @see [Heap data structure - raywenderlich] (https://www.raywenderlich.com/books/data-structures-algorithms-in-swift/v3.0/chapters/22-the-heap-data-structure)
+   * @description
+   * Dijkstra&#x27;s algorithm implementation. O((V+E) * log(V)) time | O(V) space - where V is the number of vertices and E is the number of edges in the graph
+   * @param adjacencyList An adjacency list representation of airports &amp; routes
+   * @param start An IATA code which represent starting vertex of Dijkstra&#x27;s algorithm
+   * @return {MinDistanceList} A map contains the shortest distance from the source airport to each airport &amp; its edge history
    */
   static Dijkstra(
     adjacencyList: AdjacencyList,
@@ -522,6 +548,13 @@ export class Graph {
     return minDistances;
   }
 
+  /**
+   * @description
+   * Visualize path in string representation
+   * @param src An IATA code of source airport
+   * @param sortedEdges A List of sorted edges in visiting order
+   * @returns {string} Representation of path, such as &quot;A -&gt; B -&gt; C -&gt; D&quot;
+   */
   static VisualizePath(src: string, sortedEdges: Edge[]): string {
     return &#x60;${src} -&gt; ${sortedEdges.map((edges) &#x3D;&gt; edges.dest).join(&#x27; -&gt; &#x27;)}&#x60;;
   }
