@@ -1,9 +1,11 @@
+import * as _ from 'lodash';
+
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Graph } from '@modules/graph/models/graph.model';
 import { Edge } from '@modules/graph/models/edge.model';
 import { IShortestPathResult } from '@modules/graph/interfaces/graph.interface';
-import * as _ from 'lodash';
+import { PathNotFound } from '@modules/graph/errors';
 
 @Injectable()
 export class GraphService {
@@ -19,20 +21,29 @@ export class GraphService {
   }
 
   findShortestPath(src: string, dest: string): IShortestPathResult {
-    const shortestPaths = Graph.Dijkstra(this._graph.adjacencyList, src);
-    const shortestPathToDest = shortestPaths.get(dest);
+    const mimDistances = Graph.Dijkstra(this._graph.adjacencyList, src);
+    const shortestPathToDest = mimDistances.get(dest);
     const edges: Edge[] = [];
 
     let previousEdge = shortestPathToDest.previousEdge;
 
     while (edges.length <= this._maxLegs && previousEdge) {
       edges.push(previousEdge);
-      previousEdge = shortestPaths.get(previousEdge.src).previousEdge;
+      previousEdge = mimDistances.get(previousEdge.src).previousEdge;
+    }
+
+    const sortedEdges = _.reverse(edges);
+
+    if (sortedEdges.length > 0 && sortedEdges[0].src !== src) {
+      throw new PathNotFound(
+        `Path from ${src} to ${dest} could not be found for less than ${this._maxLegs} layovers`,
+      );
     }
 
     return {
-      totalDistance: shortestPathToDest.totalDistance,
-      edges: _.reverse(edges),
+      totalDistanceInKm: shortestPathToDest.totalDistance,
+      path: Graph.VisualizePath(src, sortedEdges),
+      edges: sortedEdges,
     };
   }
 }

@@ -7,9 +7,10 @@ export class Graph {
   adjacencyList: AdjacencyList = new AdjacencyList();
 
   /**
-   * @description Add edge to a vertex
-   * @param iata Unique airport id which is represented as vertex
-   * @param edge Flight connection which is represented as weighted edge between vertices
+   * @description
+   * Add an edge to a vertex
+   * @param iata An unique IATA code which is represented as vertex
+   * @param edge A flight connection which is represented as weighted edge between vertices
    */
   addEdge(iata: string, edge: Edge): void {
     if (this.adjacencyList.has(iata)) {
@@ -22,8 +23,11 @@ export class Graph {
   }
 
   /**
-   * @description Dijkstra's algorithm implementation. O((V+E) * log(V)) time | O(V) space - where V is the number of vertices and E is the number of edges in the graph
-   * @see [Dijkstra's algorithm implementation guide - geeksforgeeks](https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/)
+   * @description
+   * Dijkstra's algorithm implementation. O((V+E) * log(V)) time | O(V) space - where V is the number of vertices and E is the number of edges in the graph
+   * @param adjacencyList An adjacency list representation of airports & routes
+   * @param start An IATA code which represent starting vertex of Dijkstra's algorithm
+   * @return {MinDistanceList} A map contains the shortest distance from the source airport to each airport & its edge history
    */
   static Dijkstra(
     adjacencyList: AdjacencyList,
@@ -84,5 +88,16 @@ export class Graph {
       }
     }
     return shortestPaths;
+  }
+
+  /**
+   * @description
+   * Visualize path in string representation
+   * @param src An IATA code of source airport
+   * @param sortedEdges A List of sorted edges in visiting order
+   * @returns {string} Representation of path, such as "A -> B -> C -> D"
+   */
+  static VisualizePath(src: string, sortedEdges: Edge[]): string {
+    return `${src} -> ${sortedEdges.map((edges) => edges.dest).join(' -> ')}`;
   }
 }

@@ -7,10 +7,10 @@ import { AppService } from './app.service';
 import { AirportsModule } from '@modules/airports/airports.module';
 import { RoutesModule } from '@modules/routes/routes.module';
 
-import configuration from '@config/configuration';
 import { CommonModule } from '@common/common.module';
 import { GraphModule } from '@modules/graph/graph.module';
 import { DatabaseModule } from '@database/database.module';
+import configuration from '@config/configuration';
 
 @Module({
   imports: [
