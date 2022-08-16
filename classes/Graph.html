@@ -508,18 +508,18 @@ export class Graph {
       previousEdge: null,
     });
 
-    const visitedVerticesHeap &#x3D; new MinHeap();
+    const minHeap &#x3D; new MinHeap();
 
     // O(V)
-    visitedVerticesHeap.init(initialDistances);
+    minHeap.init(initialDistances);
 
     // O(log(V))
-    visitedVerticesHeap.replace([start, 0]);
+    minHeap.replace([start, 0]);
 
     // O(V)
-    while (!visitedVerticesHeap.isEmpty()) {
+    while (!minHeap.isEmpty()) {
       // O(1)
-      const [vertex, currentMinDistance] &#x3D; visitedVerticesHeap.poll();
+      const [vertex, currentMinDistance] &#x3D; minHeap.poll();
 
       if (currentMinDistance &#x3D;&#x3D;&#x3D; Infinity) {
         break;
@@ -541,7 +541,7 @@ export class Graph {
           shortestPaths.set(dest, currentPath);
 
           // O(log(V))
-          visitedVerticesHeap.push([dest, currentDistance]);
+          minHeap.push([dest, currentDistance]);
         }
       }
     }
