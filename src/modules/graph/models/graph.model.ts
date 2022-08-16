@@ -29,35 +29,35 @@ export class Graph {
     adjacencyList: AdjacencyList,
     start: string,
   ): MinDistanceList {
-    const minDistances = new MinDistanceList();
+    const shortestPaths = new MinDistanceList();
     const initialDistances: HeapItem[] = [];
 
     // O(V)
     for (const iata of adjacencyList.keys()) {
-      minDistances.set(iata, {
+      shortestPaths.set(iata, {
         totalDistance: Infinity,
         previousEdge: null,
       });
       initialDistances.push([iata, Infinity]);
     }
 
-    minDistances.set(start, {
+    shortestPaths.set(start, {
       totalDistance: 0,
       previousEdge: null,
     });
 
-    const minHeap = new MinHeap();
+    const visitedVerticesHeap = new MinHeap();
 
     // O(V)
-    minHeap.init(initialDistances);
+    visitedVerticesHeap.init(initialDistances);
 
     // O(log(V))
-    minHeap.replace([start, 0]);
+    visitedVerticesHeap.replace([start, 0]);
 
     // O(V)
-    while (!minHeap.isEmpty()) {
+    while (!visitedVerticesHeap.isEmpty()) {
       // O(1)
-      const [vertex, currentMinDistance] = minHeap.poll();
+      const [vertex, currentMinDistance] = visitedVerticesHeap.poll();
 
       if (currentMinDistance === Infinity) {
         break;
@@ -70,19 +70,19 @@ export class Graph {
         const { dest, distance } = edge;
 
         const currentDistance = currentMinDistance + distance;
-        const currentPath = minDistances.get(dest);
+        const currentPath = shortestPaths.get(dest);
 
         if (currentDistance < currentPath?.totalDistance) {
           currentPath.totalDistance = currentDistance;
           currentPath.previousEdge = edge;
 
-          minDistances.set(dest, currentPath);
+          shortestPaths.set(dest, currentPath);
 
           // O(log(V))
-          minHeap.push([dest, currentDistance]);
+          visitedVerticesHeap.push([dest, currentDistance]);
         }
       }
     }
-    return minDistances;
+    return shortestPaths;
   }
 }
