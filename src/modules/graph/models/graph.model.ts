@@ -50,18 +50,18 @@ export class Graph {
       previousEdge: null,
     });
 
-    const visitedVerticesHeap = new MinHeap();
+    const minHeap = new MinHeap();
 
     // O(V)
-    visitedVerticesHeap.init(initialDistances);
+    minHeap.init(initialDistances);
 
     // O(log(V))
-    visitedVerticesHeap.replace([start, 0]);
+    minHeap.replace([start, 0]);
 
     // O(V)
-    while (!visitedVerticesHeap.isEmpty()) {
+    while (!minHeap.isEmpty()) {
       // O(1)
-      const [vertex, currentMinDistance] = visitedVerticesHeap.poll();
+      const [vertex, currentMinDistance] = minHeap.poll();
 
       if (currentMinDistance === Infinity) {
         break;
@@ -83,7 +83,7 @@ export class Graph {
           shortestPaths.set(dest, currentPath);
 
           // O(log(V))
-          visitedVerticesHeap.push([dest, currentDistance]);
+          minHeap.push([dest, currentDistance]);
         }
       }
     }
