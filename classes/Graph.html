@@ -491,35 +491,35 @@ export class Graph {
     adjacencyList: AdjacencyList,
     start: string,
   ): MinDistanceList {
-    const minDistances &#x3D; new MinDistanceList();
+    const shortestPaths &#x3D; new MinDistanceList();
     const initialDistances: HeapItem[] &#x3D; [];
 
     // O(V)
     for (const iata of adjacencyList.keys()) {
-      minDistances.set(iata, {
+      shortestPaths.set(iata, {
         totalDistance: Infinity,
         previousEdge: null,
       });
       initialDistances.push([iata, Infinity]);
     }
 
-    minDistances.set(start, {
+    shortestPaths.set(start, {
       totalDistance: 0,
       previousEdge: null,
     });
 
-    const minHeap &#x3D; new MinHeap();
+    const visitedVerticesHeap &#x3D; new MinHeap();
 
     // O(V)
-    minHeap.init(initialDistances);
+    visitedVerticesHeap.init(initialDistances);
 
     // O(log(V))
-    minHeap.replace([start, 0]);
+    visitedVerticesHeap.replace([start, 0]);
 
     // O(V)
-    while (!minHeap.isEmpty()) {
-      // O(log(n))
-      const [vertex, currentMinDistance] &#x3D; minHeap.poll();
+    while (!visitedVerticesHeap.isEmpty()) {
+      // O(1)
+      const [vertex, currentMinDistance] &#x3D; visitedVerticesHeap.poll();
 
       if (currentMinDistance &#x3D;&#x3D;&#x3D; Infinity) {
         break;
@@ -532,20 +532,20 @@ export class Graph {
         const { dest, distance } &#x3D; edge;
 
         const currentDistance &#x3D; currentMinDistance + distance;
-        const currentPath &#x3D; minDistances.get(dest);
+        const currentPath &#x3D; shortestPaths.get(dest);
 
         if (currentDistance &lt; currentPath?.totalDistance) {
           currentPath.totalDistance &#x3D; currentDistance;
           currentPath.previousEdge &#x3D; edge;
 
-          minDistances.set(dest, currentPath);
+          shortestPaths.set(dest, currentPath);
 
           // O(log(V))
-          minHeap.push([dest, currentDistance]);
+          visitedVerticesHeap.push([dest, currentDistance]);
         }
       }
     }
-    return minDistances;
+    return shortestPaths;
   }
 
   /**
